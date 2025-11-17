@@ -301,11 +301,6 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'type' => 'navbar-search',
-            'text' => 'buscar',
-            'topnav_right' => true,
-        ],
-        [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
@@ -316,81 +311,15 @@ return [
             'text' => 'buscar',
         ],
         [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
+            'text' => 'Panel de Control',
+            'url' => 'home',
+            'icon' => 'fas fa-fw fa-home',
         ],
         [
-            'text' => 'páginas',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'configuración_de_cuenta'],
-        [
-            'text' => 'perfil',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'cambiar_contraseña',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'multinivel',
-            'icon' => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'nivel_uno',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'nivel_uno',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'nivel_dos',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'nivel_dos',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'nivel_tres',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'nivel_tres',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'nivel_uno',
-                    'url' => '#',
-                ],
-            ],
-        ],
-        ['header' => 'etiquetas'],
-        [
-            'text' => 'importante',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'advertencia',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'información',
-            'icon_color' => 'cyan',
-            'url' => '#',
+            'text' => 'Prueba de Correo',
+            'url' => 'correo/prueba',
+            'icon' => 'fas fa-fw fa-envelope',
+            'can' => 'role:root',
         ],
     ],
 
