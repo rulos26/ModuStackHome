@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'ModuStackHome',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,12 +63,12 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>ModuStack</b>Home',
     'logo_img' => 'public/vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_alt' => 'Logo ModuStackHome',
 
     /*
     |--------------------------------------------------------------------------
@@ -87,7 +87,7 @@ return [
         'enabled' => false,
         'img' => [
             'path' => 'public/vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'Auth Logo',
+            'alt' => 'Logo de Autenticación',
             'class' => '',
             'width' => 50,
             'height' => 50,
@@ -114,7 +114,7 @@ return [
         'mode' => 'fullscreen',
         'img' => [
             'path' => 'public/vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'AdminLTE Preloader Image',
+            'alt' => 'Imagen de Carga ModuStackHome',
             'effect' => 'animation__shake',
             'width' => 60,
             'height' => 60,
@@ -302,7 +302,7 @@ return [
         // Navbar items:
         [
             'type' => 'navbar-search',
-            'text' => 'search',
+            'text' => 'buscar',
             'topnav_right' => true,
         ],
         [
@@ -310,10 +310,10 @@ return [
             'topnav_right' => true,
         ],
 
-        // Sidebar items:
+        // Elementos del menú lateral:
         [
             'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'buscar',
         ],
         [
             'text' => 'blog',
@@ -321,49 +321,49 @@ return [
             'can' => 'manage-blog',
         ],
         [
-            'text' => 'pages',
+            'text' => 'páginas',
             'url' => 'admin/pages',
             'icon' => 'far fa-fw fa-file',
             'label' => 4,
             'label_color' => 'success',
         ],
-        ['header' => 'account_settings'],
+        ['header' => 'configuración_de_cuenta'],
         [
-            'text' => 'profile',
+            'text' => 'perfil',
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'change_password',
+            'text' => 'cambiar_contraseña',
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
-            'text' => 'multilevel',
+            'text' => 'multinivel',
             'icon' => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'level_one',
+                    'text' => 'nivel_uno',
                     'url' => '#',
                 ],
                 [
-                    'text' => 'level_one',
+                    'text' => 'nivel_uno',
                     'url' => '#',
                     'submenu' => [
                         [
-                            'text' => 'level_two',
+                            'text' => 'nivel_dos',
                             'url' => '#',
                         ],
                         [
-                            'text' => 'level_two',
+                            'text' => 'nivel_dos',
                             'url' => '#',
                             'submenu' => [
                                 [
-                                    'text' => 'level_three',
+                                    'text' => 'nivel_tres',
                                     'url' => '#',
                                 ],
                                 [
-                                    'text' => 'level_three',
+                                    'text' => 'nivel_tres',
                                     'url' => '#',
                                 ],
                             ],
@@ -371,24 +371,24 @@ return [
                     ],
                 ],
                 [
-                    'text' => 'level_one',
+                    'text' => 'nivel_uno',
                     'url' => '#',
                 ],
             ],
         ],
-        ['header' => 'labels'],
+        ['header' => 'etiquetas'],
         [
-            'text' => 'important',
+            'text' => 'importante',
             'icon_color' => 'red',
             'url' => '#',
         ],
         [
-            'text' => 'warning',
+            'text' => 'advertencia',
             'icon_color' => 'yellow',
             'url' => '#',
         ],
         [
-            'text' => 'information',
+            'text' => 'información',
             'icon_color' => 'cyan',
             'url' => '#',
         ],
