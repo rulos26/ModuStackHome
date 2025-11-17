@@ -43,7 +43,7 @@
                             <th>Foto de Perfil:</th>
                             <td>
                                 @if ($usuario->image)
-                                    <img src="{{ asset('storage/' . $usuario->image) }}" 
+                                    <img src="{{ asset($usuario->image) }}" 
                                          alt="Foto de perfil" 
                                          class="img-thumbnail" 
                                          style="max-width: 100px; max-height: 100px;">

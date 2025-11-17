@@ -71,12 +71,24 @@ class PerfilController extends Controller
             // Manejar subida de imagen
             if ($request->hasFile('image')) {
                 // Eliminar imagen anterior si existe
-                if ($usuario->image && Storage::disk('public')->exists($usuario->image)) {
-                    Storage::disk('public')->delete($usuario->image);
+                if ($usuario->image && file_exists(public_path($usuario->image))) {
+                    unlink(public_path($usuario->image));
                 }
 
-                // Guardar nueva imagen
-                $imagePath = $request->file('image')->store('users', 'public');
+                // Crear directorio si no existe
+                $userDir = public_path('img/user');
+                if (!file_exists($userDir)) {
+                    mkdir($userDir, 0755, true);
+                }
+                
+                // Obtener extensión del archivo
+                $extension = $request->file('image')->getClientOriginalExtension();
+                // Nombre del archivo: nombre del usuario + extensión
+                $fileName = str_replace(' ', '_', $usuario->name) . '_' . time() . '.' . $extension;
+                $imagePath = 'img/user/' . $fileName;
+                
+                // Mover archivo a public/img/user/
+                $request->file('image')->move($userDir, $fileName);
                 $usuario->image = $imagePath;
             }
 

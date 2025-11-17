@@ -54,7 +54,7 @@ class User extends Authenticatable
     public function adminlte_image(): string
     {
         if ($this->image) {
-            return asset('storage/' . $this->image);
+            return asset($this->image);
         }
         // Imagen por defecto si no tiene foto
         return asset('vendor/adminlte/dist/img/user2-160x160.jpg');

@@ -140,7 +140,7 @@
                     </label>
                     <div class="mb-2">
                         @if ($usuario->image)
-                            <img src="{{ asset('storage/' . $usuario->image) }}" 
+                            <img src="{{ asset($usuario->image) }}" 
                                  alt="Foto de perfil" 
                                  class="img-thumbnail" 
                                  style="max-width: 150px; max-height: 150px;">
