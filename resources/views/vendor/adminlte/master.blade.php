@@ -43,7 +43,7 @@
                 <!-- Font Awesome 6.4.0 -->
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
                 <!-- OverlayScrollbars -->
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.1/css/OverlayScrollbars.min.css" integrity="sha512-jN4O0u6mG3eG1tpPG2A58owdCOBDxXvx5CM6yQ9s7f8v+QSBk+O3H9rK0Y3BQv4Z8c7N8c1A3qF8q8X5k8V8vw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.1/css/OverlayScrollbars.min.css" integrity="sha512-jN4O0AUkRmE6Jwc8la2I5iBmS+tCDcfUd1eq8nrZIBnDKTmCp5YxxNN1/aetnAH32qT+dDbk1aGhhoaw5cJNlw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
                 <!-- AdminLTE 3 CSS -->
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
@@ -115,9 +115,9 @@
                 <!-- jQuery 3.6.0 -->
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                 <!-- Bootstrap 4.6.2 -->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js" integrity="sha512-7KkTNrhi3ZJwPGsjm9VO6pXicT8Xwv9eTqH1eY0ehlfOasx55sxW7Y2QSH9gP2hF1z+y2R7gGbP8vK9Ctsq/Og==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js" integrity="sha512-igl8WEUuas9k5dtnhKqyyld6TzzRjvMqLC79jkgT3z02FvJyHAuUtyemm/P/jYSne1xwFI06ezQxEwweaiV7VA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                 <!-- OverlayScrollbars JS -->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.1/js/jquery.overlayScrollbars.min.js" integrity="sha512-jN4O0u6mG3eG1tpPG2A58owdCOBDxXvx5CM6yQ9s7f8v+QSBk+O3H9rK0Y3BQv4Z8c7N8c1A3qF8q8X5k8V8vw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.1/js/jquery.overlayScrollbars.min.js" integrity="sha512-3Ofi0j25Ar6Hyqk2sdvfuoVCvvN6nE6Dh/eoMc8RQ/bnCvO8wpE+M5KyJz6T08T7pl/x82I/3Y5Amz9n3T9Esw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                 <!-- AdminLTE 3 JS -->
                 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
         @endswitch

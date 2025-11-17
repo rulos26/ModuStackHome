@@ -235,6 +235,11 @@ Esto asegura que se use el bloque `@default` que ahora contiene los CDN.
 
 ---
 
+## Errores Relacionados
+
+Después de implementar esta solución, pueden aparecer errores de integridad de hashes. Ver:
+- [Error: Failed to find a valid digest in the 'integrity' attribute](error-integridad-hashes-cdn.md)
+
 ## Referencias
 
 - [AdminLTE 3 Documentation](https://adminlte.io/docs/3.2/)
