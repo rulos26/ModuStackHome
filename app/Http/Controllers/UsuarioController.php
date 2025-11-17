@@ -93,7 +93,7 @@ class UsuarioController extends Controller
                 $extension = $request->file('image')->getClientOriginalExtension();
                 // Nombre del archivo: nombre del usuario + extensión
                 $fileName = str_replace(' ', '_', $request->name) . '_' . time() . '.' . $extension;
-                $imagePath = 'img/user/' . $fileName;
+                $imagePath = 'public/img/user/' . $fileName;
                 
                 // Mover archivo a public/img/user/
                 $request->file('image')->move($userDir, $fileName);
@@ -188,8 +188,12 @@ class UsuarioController extends Controller
             // Manejar subida de imagen
             if ($request->hasFile('image')) {
                 // Eliminar imagen anterior si existe
-                if ($usuario->image && file_exists(public_path($usuario->image))) {
-                    unlink(public_path($usuario->image));
+                if ($usuario->image) {
+                    // Remover 'public/' de la ruta para obtener la ruta física
+                    $imagePath = str_replace('public/', '', $usuario->image);
+                    if (file_exists(public_path($imagePath))) {
+                        unlink(public_path($imagePath));
+                    }
                 }
 
                 // Crear directorio si no existe
@@ -202,7 +206,7 @@ class UsuarioController extends Controller
                 $extension = $request->file('image')->getClientOriginalExtension();
                 // Nombre del archivo: nombre del usuario + extensión
                 $fileName = str_replace(' ', '_', $usuario->name) . '_' . time() . '.' . $extension;
-                $imagePath = 'img/user/' . $fileName;
+                $imagePath = 'public/img/user/' . $fileName;
                 
                 // Mover archivo a public/img/user/
                 $request->file('image')->move($userDir, $fileName);
