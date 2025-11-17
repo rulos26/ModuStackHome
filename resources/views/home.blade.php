@@ -1,23 +1,27 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Panel de Control')
+
+@section('content_header')
+    <h1>Panel de Control</h1>
+@stop
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Panel de Control') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('¡Has iniciado sesión!') }}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Bienvenido</h3>
+        </div>
+        <div class="card-body">
+            @if (session('status'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('status') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
+            @endif
+
+            <p class="lead">{{ __('¡Has iniciado sesión!') }}</p>
         </div>
     </div>
-</div>
-@endsection
+@stop
