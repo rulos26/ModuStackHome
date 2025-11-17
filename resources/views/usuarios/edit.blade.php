@@ -28,7 +28,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('usuarios.update', $usuario) }}" method="POST">
+            <form action="{{ route('usuarios.update', $usuario) }}" method="POST" id="editUserForm" novalidate>
                 @csrf
                 @method('PUT')
 
@@ -42,10 +42,14 @@
                            name="name" 
                            value="{{ old('name', $usuario->name) }}" 
                            placeholder="Ingrese el nombre completo" 
+                           minlength="3"
+                           maxlength="255"
+                           pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
                            required>
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
+                    <div class="invalid-feedback" id="nameError"></div>
                 </div>
 
                 <div class="form-group">
@@ -62,20 +66,29 @@
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
+                    <div class="invalid-feedback" id="emailError"></div>
                 </div>
 
                 <div class="form-group">
                     <label for="password">
                         <i class="fas fa-lock"></i> Nueva Contraseña
                     </label>
-                    <input type="password" 
-                           class="form-control @error('password') is-invalid @enderror" 
-                           id="password" 
-                           name="password" 
-                           placeholder="Dejar en blanco para mantener la actual">
-                    @error('password')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <div class="input-group">
+                        <input type="password" 
+                               class="form-control @error('password') is-invalid @enderror" 
+                               id="password" 
+                               name="password" 
+                               placeholder="Dejar en blanco para mantener la actual"
+                               minlength="8">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword" style="border-left: 0;">
+                                <i class="fas fa-eye" id="togglePasswordIcon"></i>
+                            </button>
+                        </div>
+                        @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <small class="form-text text-muted">Dejar en blanco si no deseas cambiar la contraseña. Mínimo 8 caracteres si se cambia.</small>
                 </div>
 
@@ -83,11 +96,19 @@
                     <label for="password_confirmation">
                         <i class="fas fa-lock"></i> Confirmar Nueva Contraseña
                     </label>
-                    <input type="password" 
-                           class="form-control" 
-                           id="password_confirmation" 
-                           name="password_confirmation" 
-                           placeholder="Repite la nueva contraseña">
+                    <div class="input-group">
+                        <input type="password" 
+                               class="form-control" 
+                               id="password_confirmation" 
+                               name="password_confirmation" 
+                               placeholder="Repite la nueva contraseña"
+                               minlength="8">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="togglePasswordConfirmation" style="border-left: 0;">
+                                <i class="fas fa-eye" id="togglePasswordConfirmationIcon"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 @if (auth()->user()->hasAnyRole(['root', 'admin']))
@@ -124,5 +145,142 @@
             </form>
         </div>
     </div>
+@stop
+
+@section('js')
+    <script>
+        // Toggle para mostrar/ocultar contraseña
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('togglePasswordIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        });
+
+        // Toggle para mostrar/ocultar confirmación de contraseña
+        document.getElementById('togglePasswordConfirmation').addEventListener('click', function() {
+            const passwordConfirmationInput = document.getElementById('password_confirmation');
+            const toggleIcon = document.getElementById('togglePasswordConfirmationIcon');
+            
+            if (passwordConfirmationInput.type === 'password') {
+                passwordConfirmationInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordConfirmationInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        });
+
+        // Validación en tiempo real
+        const form = document.getElementById('editUserForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const passwordConfirmationInput = document.getElementById('password_confirmation');
+
+        // Validar nombre
+        nameInput.addEventListener('input', function() {
+            const name = this.value.trim();
+            const nameError = document.getElementById('nameError');
+            
+            if (name.length < 3) {
+                this.setCustomValidity('El nombre debe tener al menos 3 caracteres.');
+                this.classList.add('is-invalid');
+                nameError.textContent = 'El nombre debe tener al menos 3 caracteres.';
+            } else if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(name)) {
+                this.setCustomValidity('El nombre solo puede contener letras y espacios.');
+                this.classList.add('is-invalid');
+                nameError.textContent = 'El nombre solo puede contener letras y espacios.';
+            } else {
+                this.setCustomValidity('');
+                this.classList.remove('is-invalid');
+                nameError.textContent = '';
+            }
+        });
+
+        // Validar email
+        emailInput.addEventListener('input', function() {
+            const email = this.value.trim();
+            const emailError = document.getElementById('emailError');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(email)) {
+                this.setCustomValidity('Por favor ingresa un correo electrónico válido.');
+                this.classList.add('is-invalid');
+                emailError.textContent = 'Por favor ingresa un correo electrónico válido.';
+            } else {
+                this.setCustomValidity('');
+                this.classList.remove('is-invalid');
+                emailError.textContent = '';
+            }
+        });
+
+        // Validar contraseña (solo si se ingresa)
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            
+            if (password.length > 0 && password.length < 8) {
+                this.setCustomValidity('La contraseña debe tener al menos 8 caracteres.');
+                this.classList.add('is-invalid');
+            } else {
+                this.setCustomValidity('');
+                this.classList.remove('is-invalid');
+            }
+            
+            // Validar confirmación si ya tiene valor
+            if (passwordConfirmationInput.value.length > 0) {
+                passwordConfirmationInput.dispatchEvent(new Event('input'));
+            }
+        });
+
+        // Validar confirmación de contraseña (solo si se ingresa)
+        passwordConfirmationInput.addEventListener('input', function() {
+            const password = passwordInput.value;
+            const confirmation = this.value;
+            
+            if (confirmation.length > 0 && password !== confirmation) {
+                this.setCustomValidity('Las contraseñas no coinciden.');
+                this.classList.add('is-invalid');
+            } else {
+                this.setCustomValidity('');
+                this.classList.remove('is-invalid');
+            }
+        });
+
+        // Validación al enviar el formulario
+        form.addEventListener('submit', function(event) {
+            // Validar contraseña solo si se ingresó
+            if (passwordInput.value.length > 0) {
+                if (passwordInput.value.length < 8) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    passwordInput.classList.add('is-invalid');
+                }
+                
+                if (passwordInput.value !== passwordConfirmationInput.value) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    passwordConfirmationInput.classList.add('is-invalid');
+                }
+            }
+            
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            form.classList.add('was-validated');
+        });
+    </script>
 @stop
 
