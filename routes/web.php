@@ -19,3 +19,10 @@ Route::middleware(['auth', 'role:root'])->prefix('correo')->name('correo.')->gro
     Route::get('/prueba', [App\Http\Controllers\CorreoController::class, 'index'])->name('prueba');
     Route::post('/enviar', [App\Http\Controllers\CorreoController::class, 'enviar'])->name('enviar');
 });
+
+// Rutas del módulo de usuarios (con políticas de autorización)
+Route::middleware(['auth'])->group(function () {
+    Route::resource('usuarios', App\Http\Controllers\UsuarioController::class)->parameters([
+        'usuarios' => 'usuario'
+    ]);
+});

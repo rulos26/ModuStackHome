@@ -316,6 +316,13 @@ return [
             'icon' => 'fas fa-fw fa-home',
         ],
         [
+            'text' => 'Usuarios',
+            'url' => 'usuarios',
+            'icon' => 'fas fa-fw fa-users',
+            'can' => 'viewAny',
+            'model' => App\Models\User::class,
+        ],
+        [
             'text' => 'Prueba de Correo',
             'url' => 'correo/prueba',
             'icon' => 'fas fa-fw fa-envelope',
