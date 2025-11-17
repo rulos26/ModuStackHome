@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 
@@ -54,6 +55,7 @@ class UsuarioController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'name.required' => 'El nombre es obligatorio.',
             'email.required' => 'El correo electrónico es obligatorio.',
@@ -62,6 +64,9 @@ class UsuarioController extends Controller
             'password.required' => 'La contraseña es obligatoria.',
             'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
             'password.confirmed' => 'Las contraseñas no coinciden.',
+            'image.image' => 'El archivo debe ser una imagen.',
+            'image.mimes' => 'La imagen debe ser jpeg, png, jpg o gif.',
+            'image.max' => 'La imagen no debe ser mayor a 2MB.',
         ]);
 
         if ($validator->fails()) {
@@ -71,11 +76,19 @@ class UsuarioController extends Controller
         }
 
         try {
-            $usuario = User::create([
+            $usuarioData = [
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-            ]);
+            ];
+
+            // Manejar subida de imagen
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('users', 'public');
+                $usuarioData['image'] = $imagePath;
+            }
+
+            $usuario = User::create($usuarioData);
 
             // Asignar rol cliente por defecto
             $rolCliente = Role::where('name', 'cliente')->first();
@@ -123,6 +136,7 @@ class UsuarioController extends Controller
         $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $usuario->id,
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
 
         $messages = [
@@ -130,6 +144,9 @@ class UsuarioController extends Controller
             'email.required' => 'El correo electrónico es obligatorio.',
             'email.email' => 'El correo electrónico debe ser válido.',
             'email.unique' => 'Este correo electrónico ya está registrado.',
+            'image.image' => 'El archivo debe ser una imagen.',
+            'image.mimes' => 'La imagen debe ser jpeg, png, jpg o gif.',
+            'image.max' => 'La imagen no debe ser mayor a 2MB.',
         ];
 
         // Si se proporciona una contraseña, validarla
@@ -156,10 +173,22 @@ class UsuarioController extends Controller
                 $usuario->password = Hash::make($request->password);
             }
 
+            // Manejar subida de imagen
+            if ($request->hasFile('image')) {
+                // Eliminar imagen anterior si existe
+                if ($usuario->image && Storage::disk('public')->exists($usuario->image)) {
+                    Storage::disk('public')->delete($usuario->image);
+                }
+
+                // Guardar nueva imagen
+                $imagePath = $request->file('image')->store('users', 'public');
+                $usuario->image = $imagePath;
+            }
+
             $usuario->save();
 
-            // Solo root y admin pueden cambiar roles
-            if (auth()->user()->hasAnyRole(['root', 'admin']) && $request->filled('role')) {
+            // Solo root puede cambiar roles (no admin)
+            if (auth()->user()->hasRole('root') && $request->filled('role')) {
                 $nuevoRol = Role::find($request->role);
                 if ($nuevoRol) {
                     $usuario->syncRoles([$nuevoRol->name]);

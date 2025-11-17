@@ -40,6 +40,22 @@
                             <td>{{ $usuario->email }}</td>
                         </tr>
                         <tr>
+                            <th>Foto de Perfil:</th>
+                            <td>
+                                @if ($usuario->image)
+                                    <img src="{{ asset('storage/' . $usuario->image) }}" 
+                                         alt="Foto de perfil" 
+                                         class="img-thumbnail" 
+                                         style="max-width: 100px; max-height: 100px;">
+                                @else
+                                    <img src="{{ asset('vendor/adminlte/dist/img/user2-160x160.jpg') }}" 
+                                         alt="Foto por defecto" 
+                                         class="img-thumbnail" 
+                                         style="max-width: 100px; max-height: 100px;">
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
                             <th>Rol(es):</th>
                             <td>
                                 @foreach ($usuario->roles as $rol)

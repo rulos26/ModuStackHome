@@ -28,7 +28,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('usuarios.store') }}" method="POST" id="createUserForm" novalidate>
+            <form action="{{ route('usuarios.store') }}" method="POST" id="createUserForm" enctype="multipart/form-data" novalidate>
                 @csrf
 
                 <div class="form-group">
@@ -110,6 +110,21 @@
                             </button>
                         </div>
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">
+                        <i class="fas fa-image"></i> Foto de Perfil (Opcional)
+                    </label>
+                    <input type="file" 
+                           class="form-control-file @error('image') is-invalid @enderror" 
+                           id="image" 
+                           name="image" 
+                           accept="image/jpeg,image/png,image/jpg,image/gif">
+                    @error('image')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                    <small class="form-text text-muted">Formatos permitidos: JPEG, PNG, JPG, GIF. Tamaño máximo: 2MB.</small>
                 </div>
 
                 <div class="form-group">

@@ -1,17 +1,35 @@
 @extends('adminlte::page')
 
-@section('title', 'Editar Usuario')
+@section('title', 'Mi Perfil')
 
 @section('content_header')
     <h1>
-        <i class="fas fa-user-edit"></i> Editar Usuario
+        <i class="fas fa-user"></i> Mi Perfil
     </h1>
 @stop
 
 @section('content')
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Datos del Usuario</h3>
+            <h3 class="card-title">Datos del Perfil</h3>
         </div>
         <div class="card-body">
             @if ($errors->any())
@@ -28,9 +46,37 @@
                 </div>
             @endif
 
-            <form action="{{ route('usuarios.update', $usuario) }}" method="POST" id="editUserForm" enctype="multipart/form-data" novalidate>
+            <form action="{{ route('perfil.update') }}" method="POST" id="perfilForm" enctype="multipart/form-data" novalidate>
                 @csrf
                 @method('PUT')
+
+                <div class="form-group">
+                    <label for="image">
+                        <i class="fas fa-image"></i> Foto de Perfil
+                    </label>
+                    <div class="mb-2">
+                        @if ($usuario->image)
+                            <img src="{{ asset('storage/' . $usuario->image) }}" 
+                                 alt="Foto de perfil" 
+                                 class="img-thumbnail" 
+                                 style="max-width: 150px; max-height: 150px;">
+                        @else
+                            <img src="{{ asset('vendor/adminlte/dist/img/user2-160x160.jpg') }}" 
+                                 alt="Foto por defecto" 
+                                 class="img-thumbnail" 
+                                 style="max-width: 150px; max-height: 150px;">
+                        @endif
+                    </div>
+                    <input type="file" 
+                           class="form-control-file @error('image') is-invalid @enderror" 
+                           id="image" 
+                           name="image" 
+                           accept="image/jpeg,image/png,image/jpg,image/gif">
+                    @error('image')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                    <small class="form-text text-muted">Formatos permitidos: JPEG, PNG, JPG, GIF. Tamaño máximo: 2MB.</small>
+                </div>
 
                 <div class="form-group">
                     <label for="name">
@@ -111,64 +157,10 @@
                     </div>
                 </div>
 
-                @if (auth()->user()->hasRole('root'))
-                    <div class="form-group">
-                        <label for="role">
-                            <i class="fas fa-user-tag"></i> Rol
-                        </label>
-                        <select class="form-control @error('role') is-invalid @enderror" 
-                                id="role" 
-                                name="role">
-                            <option value="">Seleccione un rol</option>
-                            @foreach ($roles as $rol)
-                                <option value="{{ $rol->id }}" 
-                                        {{ $usuario->hasRole($rol->name) ? 'selected' : '' }}>
-                                    {{ ucfirst($rol->name) }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('role')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                        <small class="form-text text-muted">Solo root puede cambiar roles.</small>
-                    </div>
-                @endif
-
-                <div class="form-group">
-                    <label for="image">
-                        <i class="fas fa-image"></i> Foto de Perfil
-                    </label>
-                    <div class="mb-2">
-                        @if ($usuario->image)
-                            <img src="{{ asset('storage/' . $usuario->image) }}" 
-                                 alt="Foto de perfil" 
-                                 class="img-thumbnail" 
-                                 style="max-width: 150px; max-height: 150px;">
-                        @else
-                            <img src="{{ asset('vendor/adminlte/dist/img/user2-160x160.jpg') }}" 
-                                 alt="Foto por defecto" 
-                                 class="img-thumbnail" 
-                                 style="max-width: 150px; max-height: 150px;">
-                        @endif
-                    </div>
-                    <input type="file" 
-                           class="form-control-file @error('image') is-invalid @enderror" 
-                           id="image" 
-                           name="image" 
-                           accept="image/jpeg,image/png,image/jpg,image/gif">
-                    @error('image')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                    <small class="form-text text-muted">Formatos permitidos: JPEG, PNG, JPG, GIF. Tamaño máximo: 2MB.</small>
-                </div>
-
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Actualizar Usuario
+                        <i class="fas fa-save"></i> Actualizar Perfil
                     </button>
-                    <a href="{{ route('usuarios.index') }}" class="btn btn-secondary">
-                        <i class="fas fa-times"></i> Cancelar
-                    </a>
                 </div>
             </form>
         </div>
@@ -210,7 +202,7 @@
         });
 
         // Validación en tiempo real
-        const form = document.getElementById('editUserForm');
+        const form = document.getElementById('perfilForm');
         const nameInput = document.getElementById('name');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');

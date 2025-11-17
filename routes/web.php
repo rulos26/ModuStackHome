@@ -25,4 +25,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('usuarios', App\Http\Controllers\UsuarioController::class)->parameters([
         'usuarios' => 'usuario'
     ]);
+    
+    // Ruta de perfil (accesible para todos los usuarios autenticados)
+    Route::get('/perfil', [App\Http\Controllers\PerfilController::class, 'index'])->name('perfil.index');
+    Route::put('/perfil', [App\Http\Controllers\PerfilController::class, 'update'])->name('perfil.update');
 });

@@ -136,9 +136,9 @@ return [
     'usermenu_enabled' => true,
     'usermenu_header' => false,
     'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => false,
-    'usermenu_desc' => false,
-    'usermenu_profile_url' => false,
+    'usermenu_image' => true,
+    'usermenu_desc' => true,
+    'usermenu_profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -263,7 +263,7 @@ return [
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => false,
+    'profile_url' => 'perfil',
     'disable_darkmode_routes' => false,
 
     /*
@@ -314,6 +314,11 @@ return [
             'text' => 'Panel de Control',
             'url' => 'home',
             'icon' => 'fas fa-fw fa-home',
+        ],
+        [
+            'text' => 'Mi Perfil',
+            'url' => 'perfil',
+            'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'Usuarios',
